@@ -28,6 +28,7 @@ namespace GradeBook
 
             var grades = new List<double>() {1.1, 2.2, 3.3, 4.4};
             grades.Add(1.3);
+            grades.Add(9.40);
             result = 0.0;
 
             foreach (var number in grades)
@@ -51,6 +52,9 @@ namespace GradeBook
             //
             var book = new Book("Rewiesh gradebook.");
             book.AddGrade(2.5);
+            book.AddGrade(2.6);
+            book.AddGrade(2.7);
+            book.ShowStatistics();
         }
     }
 }
