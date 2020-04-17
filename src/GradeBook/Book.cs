@@ -3,42 +3,146 @@ using System;
 
 namespace GradeBook
 {
-    class Book 
+    public class Book 
     {
-        private string naam;
+        public string Naam;
         
         private List<double> grades;
-        private double lowGrade;
-        private double highGrade;
-        private double result = 0.0;
-
 
         public Book(string naam) 
         {
             grades = new List<double>();
-            this.naam = naam;
+            this.Naam = naam;
+        }
+
+        public void AddLetterGrade(char letter) 
+        {
+            // if (letter == 'A')
+            // {
+            //     AddGrade(90);
+            // }
+            // else if (letter == 'B')
+            // {
+            //     AddGrade(80);
+            // }
+
+            switch(letter)
+            {
+                case 'A': 
+                    AddGrade(90);
+                    break;
+
+                case 'B':
+                    AddGrade(80);
+                    break;
+
+                case 'C':
+                    AddGrade(70);
+                    break;
+
+                case 'D':
+                    AddGrade(70);
+                    break;
+
+                default:
+                    AddGrade(0);
+                    break;
+            }
         }
 
         public void AddGrade (double grade) 
         {
-            grades.Add(grade);
+            if (grade <= 100 && grade >= 0)
+            {
+                grades.Add(grade);
+            }
+            else
+            {
+                System.Console.WriteLine("Invalid value!");
+            }
         }
 
-        public void ShowStatistics()
+        public Statistics GetStatistics()
         {
-            highGrade = double.MinValue;
-            lowGrade = double.MaxValue;
+            var result = new Statistics();
+            result.Average = 0.0;
+            result.High = double.MinValue;
+            result.Low = double.MaxValue;
 
-            foreach (var number in grades)
+
+            foreach (var grade in grades)
             {
-                lowGrade = Math.Min(number, lowGrade);
-                highGrade = Math.Max(number, highGrade);
-                result += number;
+                result.Low = Math.Min(grade, result.Low);
+                result.High = Math.Max(grade, result.High);
+                result.Average += grade;
             }
-            //System.Console.WriteLine(grades.Contain;
-            System.Console.WriteLine($"The best grade {highGrade}");
-            System.Console.WriteLine($"The worst grade {lowGrade}");
-            System.Console.WriteLine($"The new average {result/grades.Count}");
+
+            
+            // var index = 0;
+
+            // do 
+            // {
+            //     result.Low = Math.Min(grades[index], result.Low);
+            //     result.High = Math.Max(grades[index], result.High);
+            //     result.Average += grades[index];
+            //     index++;
+            // } while (index < grades.Count); // loop always executes atleast once
+
+            // while (index < grades.Count)
+            // {
+            //     result.Low = Math.Min(grades[index], result.Low);
+            //     result.High = Math.Max(grades[index], result.High);
+            //     result.Average += grades[index];
+            //     index++; 
+            // }
+
+            // for (var i =0; i < grades.Count; i++)
+            // {
+            //     if (grades[i] == 42.1)
+            //     {
+            //         break;    
+            //     }
+                
+            //     if (grades[i] == 4.3)
+            //     {
+            //         continue;
+            //     }
+            //     //goto;
+            //     result.Low = Math.Min(grades[i], result.Low);
+            //     result.High = Math.Max(grades[i], result.High);
+            //     result.Average += grades[i];
+            // }
+           
+            result.Average /= grades.Count;
+
+            switch (result.Average)
+            {
+                case var d when d >= 90.0:
+                    result.Letter = 'A';
+                    break;
+                
+                case var d when d >= 80.0:
+                    result.Letter = 'B';
+                    break;
+                
+                case var d when d >= 70.0:
+                    result.Letter = 'C';
+                    break;
+                
+                case var d when d >= 60.0:
+                    result.Letter = 'D';
+                    break;
+                
+                case var d when d >= 50.0:
+                    result.Letter = 'E';
+                    break;
+
+                default:
+                    result.Letter = 'F';
+                    break;
+            }
+
+            return result;
         }
     }
 }
